@@ -8,7 +8,7 @@ WheelsManager wheelsManager;
 
 void setup() {
   Serial.begin(Settings::SerialBaudRate);
-  wheelsManager.initialize(50, 5);
+  wheelsManager.initialize(100, 5);
 }
 
 void loop() {
