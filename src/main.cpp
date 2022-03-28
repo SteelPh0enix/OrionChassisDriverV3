@@ -1,9 +1,16 @@
 #include <Arduino.h>
+#include "settings.hpp"
+#include "pinout.hpp"
+#include "scheduler.hpp"
+#include "wheels_manager.hpp"
+
+WheelsManager wheelsManager;
 
 void setup() {
-  // put your setup code here, to run once:
+  Serial.begin(Settings::SerialBaudRate);
+  wheelsManager.initialize();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  wheelsManager.process();
 }

@@ -11,7 +11,7 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-import proto.nanopb_pb2 as nanopb__pb2
+import nanopb_pb2 as nanopb__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\rChassis.proto\x1a\x0cnanopb.proto\"y\n\x03Log\x12\x17\n\x04type\x18\x01 \x01(\x0e\x32\t.Log.Type\x12\x17\n\x07\x63ontent\x18\x02 \x01(\tB\x06\x92?\x03p\xfa\x01\"@\n\x04Type\x12\x0b\n\x07INVALID\x10\x00\x12\t\n\x05\x44\x45\x42UG\x10\x01\x12\x08\n\x04INFO\x10\x02\x12\x0b\n\x07WARNING\x10\x03\x12\t\n\x05\x45RROR\x10\x04\x62\x06proto3'
+  serialized_pb=b'\n\rChassis.proto\x1a\x0cnanopb.proto\"y\n\x03Log\x12\x17\n\x04type\x18\x01 \x01(\x0e\x32\t.Log.Type\x12\x17\n\x07\x63ontent\x18\x02 \x01(\tB\x06\x92?\x03p\xc8\x01\"@\n\x04Type\x12\x0b\n\x07INVALID\x10\x00\x12\t\n\x05\x44\x45\x42UG\x10\x01\x12\x08\n\x04INFO\x10\x02\x12\x0b\n\x07WARNING\x10\x03\x12\t\n\x05\x45RROR\x10\x04\"\r\n\x0bHealthCheckb\x06proto3'
   ,
   dependencies=[nanopb__pb2.DESCRIPTOR,])
 
@@ -80,7 +80,7 @@ _LOG = _descriptor.Descriptor(
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=b'\222?\003p\372\001', file=DESCRIPTOR),
+      serialized_options=b'\222?\003p\310\001', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -98,9 +98,34 @@ _LOG = _descriptor.Descriptor(
   serialized_end=152,
 )
 
+
+_HEALTHCHECK = _descriptor.Descriptor(
+  name='HealthCheck',
+  full_name='HealthCheck',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=154,
+  serialized_end=167,
+)
+
 _LOG.fields_by_name['type'].enum_type = _LOG_TYPE
 _LOG_TYPE.containing_type = _LOG
 DESCRIPTOR.message_types_by_name['Log'] = _LOG
+DESCRIPTOR.message_types_by_name['HealthCheck'] = _HEALTHCHECK
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Log = _reflection.GeneratedProtocolMessageType('Log', (_message.Message,), {
@@ -109,6 +134,13 @@ Log = _reflection.GeneratedProtocolMessageType('Log', (_message.Message,), {
   # @@protoc_insertion_point(class_scope:Log)
   })
 _sym_db.RegisterMessage(Log)
+
+HealthCheck = _reflection.GeneratedProtocolMessageType('HealthCheck', (_message.Message,), {
+  'DESCRIPTOR' : _HEALTHCHECK,
+  '__module__' : 'Chassis_pb2'
+  # @@protoc_insertion_point(class_scope:HealthCheck)
+  })
+_sym_db.RegisterMessage(HealthCheck)
 
 
 _LOG.fields_by_name['content']._options = None

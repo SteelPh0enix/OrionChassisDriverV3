@@ -19,9 +19,13 @@ typedef enum _Log_Type {
 } Log_Type;
 
 /* Struct definitions */
+typedef struct _HealthCheck { 
+    char dummy_field;
+} HealthCheck;
+
 typedef struct _Log { 
     Log_Type type; 
-    char content[251]; 
+    char content[201]; 
 } Log;
 
 
@@ -37,7 +41,9 @@ extern "C" {
 
 /* Initializer values for message structs */
 #define Log_init_default                         {_Log_Type_MIN, ""}
+#define HealthCheck_init_default                 {0}
 #define Log_init_zero                            {_Log_Type_MIN, ""}
+#define HealthCheck_init_zero                    {0}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define Log_type_tag                             1
@@ -50,13 +56,21 @@ X(a, STATIC,   SINGULAR, STRING,   content,           2)
 #define Log_CALLBACK NULL
 #define Log_DEFAULT NULL
 
+#define HealthCheck_FIELDLIST(X, a) \
+
+#define HealthCheck_CALLBACK NULL
+#define HealthCheck_DEFAULT NULL
+
 extern const pb_msgdesc_t Log_msg;
+extern const pb_msgdesc_t HealthCheck_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
 #define Log_fields &Log_msg
+#define HealthCheck_fields &HealthCheck_msg
 
 /* Maximum encoded size of messages (where known) */
-#define Log_size                                 255
+#define HealthCheck_size                         0
+#define Log_size                                 205
 
 #ifdef __cplusplus
 } /* extern "C" */

@@ -11,5 +11,7 @@ message Log {
     }
 
     Type type = 1;
-    string content = 2 [(nanopb).max_length = 250];
+    string content = 2 [(nanopb).max_length = 200];
 }
+
+message HealthCheck {}
