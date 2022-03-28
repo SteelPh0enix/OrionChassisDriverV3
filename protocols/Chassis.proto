@@ -1,0 +1,15 @@
+syntax = "proto3";
+import "nanopb.proto";
+
+message Log {
+    enum Type {
+        INVALID = 0;
+        DEBUG = 1;
+        INFO = 2;
+        WARNING = 3;
+        ERROR = 4;
+    }
+
+    Type type = 1;
+    string content = 2 [(nanopb).max_length = 250];
+}
