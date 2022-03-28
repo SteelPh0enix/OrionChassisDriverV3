@@ -7,6 +7,6 @@ class XYDriveAlgorithm {
     int right_speed;
   };
 
-  // Assuming speed and rotation in ranges -255 : 255
+  // Assuming speed and rotation in ranges -1000 : 1000
   static Output translate(int speed, int rotation);
 };
