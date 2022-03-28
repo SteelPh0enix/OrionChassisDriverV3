@@ -82,20 +82,20 @@ void WheelsManager::process() {
 void WheelsManager::recalculateWheelsPower() {
   auto const wheelsTargetPower =
       XYDriveAlgorithm::translate(power(), rotation());
-  
-  Serial.print("Set power: ");
-  Serial.print(power());
-  Serial.print(", Left power target: ");
-  Serial.print(wheelsTargetPower.left_speed);
-  Serial.print(", Right power target: ");
-  Serial.println(wheelsTargetPower.right_speed);
 
-  Serial.println("Left front:");
+  // Serial.print("Set power: ");
+  // Serial.print(power());
+  // Serial.print(", Left power target: ");
+  // Serial.print(wheelsTargetPower.left_speed);
+  // Serial.print(", Right power target: ");
+  // Serial.println(wheelsTargetPower.right_speed);
+
+  // Serial.println("Left front:");
   m_leftFrontWheel.setTargetPower(wheelsTargetPower.left_speed);
-  Serial.println("Left rear:");
+  // Serial.println("Left rear:");
   m_leftRearWheel.setTargetPower(wheelsTargetPower.left_speed);
-  Serial.println("Right front:");
+  // Serial.println("Right front:");
   m_rightFrontWheel.setTargetPower(wheelsTargetPower.right_speed);
-  Serial.println("Right rear:");
+  // Serial.println("Right rear:");
   m_rightRearWheel.setTargetPower(wheelsTargetPower.right_speed);
 }

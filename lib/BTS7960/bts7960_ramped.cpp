@@ -51,14 +51,14 @@ void BTS7960Ramped::powerStep() {
     int const currentPowerStep =
         min(absolutePowerDifference, powerRampingIntensity()) * direction;
 
-    Serial.print("Current power: ");
-    Serial.print(power());
-    Serial.print(", power step: ");
-    Serial.print(currentPowerStep);
+    // Serial.print("Current power: ");
+    // Serial.print(power());
+    // Serial.print(", power step: ");
+    // Serial.print(currentPowerStep);
 
     setPower(power() + currentPowerStep);
 
-    Serial.print(", new power: ");
-    Serial.println(power());
+    // Serial.print(", new power: ");
+    // Serial.println(power());
   }
 }
