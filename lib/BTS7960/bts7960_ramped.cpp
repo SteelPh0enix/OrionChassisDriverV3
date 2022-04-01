@@ -12,9 +12,8 @@ void BTS7960Ramped::setPowerRampingIntensity(unsigned pwmValuePerCycle) {
 }
 
 void BTS7960Ramped::setTargetPower(int targetPower) {
-  // m_targetPower = constrain(targetPower, -Module::PWMResolution<int>(),
-  //                           Module::PWMResolution<int>());
-  m_targetPower = targetPower;
+  m_targetPower = constrain(targetPower, -Module::PWMResolution<int>(),
+                            Module::PWMResolution<int>());
 }
 
 void BTS7960Ramped::process() {

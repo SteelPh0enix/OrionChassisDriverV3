@@ -10,6 +10,7 @@ class WheelsManager {
   // 255) and rotation to wheel power
   void setPower(int power);
   void setRotation(int rotation);
+  void setPowerAndRotation(int power, int rotation);
 
   // Processing delay tells how long is the delay between actual processing
   // calls.

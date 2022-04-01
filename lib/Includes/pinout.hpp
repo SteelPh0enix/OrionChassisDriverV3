@@ -30,7 +30,7 @@ constexpr PinT DirectionF{25};
 constexpr PinT DirectionB{24};
 constexpr PinT FeedbackF{A3};
 constexpr PinT FeedbackB{A2};
-}  // namespace WheelLB
+}  // namespace WheelLF
 
 namespace WheelLR { // OK
 constexpr PinT PWMF{8};
@@ -39,5 +39,5 @@ constexpr PinT DirectionF{28};
 constexpr PinT DirectionB{29};
 constexpr PinT FeedbackF{A6};
 constexpr PinT FeedbackB{A7};
-}  // namespace WheelRB
+}  // namespace WheelLR
 }  // namespace Pinout

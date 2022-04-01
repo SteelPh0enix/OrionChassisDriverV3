@@ -1,6 +1,13 @@
 syntax = "proto3";
 import "nanopb.proto";
 
+// Message IDs reservations:
+// 0x01 - 0x1F - generic requests
+// 0x20 - 0x3F - generic responses
+// 0x40 - 0x4F - motor-related requests
+// 0x50 - 0x5F - motor-related responses
+
+// Header: 0x20
 message Log {
     enum Type {
         INVALID = 0;
@@ -14,4 +21,5 @@ message Log {
     string content = 2 [(nanopb).max_length = 200];
 }
 
+// Header: 0x01
 message HealthCheck {}
