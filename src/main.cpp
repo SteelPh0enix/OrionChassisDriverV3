@@ -1,11 +1,14 @@
 #include <Arduino.h>
+#include "comms_manager.hpp"
 #include "settings.hpp"
 #include "wheels_manager.hpp"
 
-WheelsManager wheelsManager;
 
-constexpr size_t MessageBufferSize{10};
-uint8_t messageBuffer[MessageBufferSize];
+WheelsManager wheelsManager;
+CommsManager commsManager;
+
+#define MESSAGE_BUFFER_SIZE 1024
+uint8_t messageBuffer[MESSAGE_BUFFER_SIZE]{};
 
 bool ledState = false;
 
@@ -14,29 +17,26 @@ void blink() {
   digitalWrite(LED_BUILTIN, ledState);
 }
 
+void handleHealthCheck(HealthCheck healthCheck) {}
+
 void setup() {
   Serial.begin(Settings::SerialBaudRate);
+
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, ledState);
+
+  commsManager.setHealthCheckHandler(handleHealthCheck);
+
   wheelsManager.initialize(100, 5);
 }
 
 void loop() {
-  if (Serial.available() >= 6) {
-    Serial.readBytes(messageBuffer, 6);
-    unsigned const header = (messageBuffer[1] << 8) | messageBuffer[0];
-
-    if (header == 0x2137) {
-      Serial.write(messageBuffer, 6);
-      blink();
-
-      int power =
-          static_cast<int>((messageBuffer[3] << 8) | messageBuffer[2]) - 1000;
-      int rotation =
-          static_cast<int>((messageBuffer[5] << 8) | messageBuffer[4]) - 1000;
-
-      wheelsManager.setPowerAndRotation(power, rotation);
-    }
+  if (Serial.available() >= 2) {
+    blink();
+    Serial.readBytes(messageBuffer, 2);
+    size_t const messageLength = (messageBuffer[0] << 8) | messageBuffer[1];
+    Serial.readBytes(messageBuffer, messageLength);
+    commsManager.processMessage(messageBuffer, messageLength);
   }
 
   wheelsManager.process();

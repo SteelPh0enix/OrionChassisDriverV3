@@ -7,8 +7,7 @@ BTS7960::BTS7960(uint8_t pwmFPin,
                  uint8_t directionBPin,
                  uint8_t feedbackFPin,
                  uint8_t feedbackBPin) {
-  setPins(pwmFPin, pwmBPin, directionFPin, directionBPin, feedbackFPin,
-          feedbackBPin);
+  setPins(pwmFPin, pwmBPin, directionFPin, directionBPin, feedbackFPin, feedbackBPin);
 }
 void BTS7960::setPins(uint8_t pwmFPin,
                       uint8_t pwmBPin,

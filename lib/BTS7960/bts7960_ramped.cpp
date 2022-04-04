@@ -7,13 +7,11 @@ void BTS7960Ramped::setProcessingDelay(unsigned long delayMs) {
 }
 
 void BTS7960Ramped::setPowerRampingIntensity(unsigned pwmValuePerCycle) {
-  m_powerRampingIntensity =
-      pwmValuePerCycle % Module::PWMResolution<unsigned>();
+  m_powerRampingIntensity = pwmValuePerCycle % Module::PWMResolution<unsigned>();
 }
 
 void BTS7960Ramped::setTargetPower(int targetPower) {
-  m_targetPower = constrain(targetPower, -Module::PWMResolution<int>(),
-                            Module::PWMResolution<int>());
+  m_targetPower = constrain(targetPower, -Module::PWMResolution<int>(), Module::PWMResolution<int>());
 }
 
 void BTS7960Ramped::process() {
@@ -47,8 +45,7 @@ void BTS7960Ramped::powerStep() {
 
   if (absolutePowerDifference > 0) {
     int const direction = powerDifference >= 0 ? 1 : -1;
-    int const currentPowerStep =
-        min(absolutePowerDifference, powerRampingIntensity()) * direction;
+    int const currentPowerStep = min(absolutePowerDifference, powerRampingIntensity()) * direction;
 
     // Serial.print("Current power: ");
     // Serial.print(power());

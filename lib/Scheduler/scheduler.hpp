@@ -8,9 +8,7 @@ class Scheduler {
   using FuncT = void (*)();
   static constexpr size_t MaxFunctionsScheduled{10};
 
-  size_t currentlyScheduledFunctionsCount() const {
-    return m_currentlyScheduledFunctionsCount;
-  }
+  size_t currentlyScheduledFunctionsCount() const { return m_currentlyScheduledFunctionsCount; }
 
   bool addFunction(FuncT function, unsigned long delayMs) {
     if (currentlyScheduledFunctionsCount() < MaxFunctionsScheduled) {
@@ -35,8 +33,7 @@ class Scheduler {
       ScheduleInfo& funcInfo = m_scheduledFunctions[i];
       if (funcInfo.function != nullptr) {
         unsigned long const currentTime = millis();
-        unsigned long const timeSinceLastRun =
-            currentTime - funcInfo.lastRunTimestampMs;
+        unsigned long const timeSinceLastRun = currentTime - funcInfo.lastRunTimestampMs;
         if (timeSinceLastRun > funcInfo.delayMs) {
           funcInfo.function();
           funcInfo.lastRunTimestampMs = currentTime;

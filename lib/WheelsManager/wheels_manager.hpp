@@ -3,8 +3,7 @@
 
 class WheelsManager {
  public:
-  void initialize(unsigned long processingDelayMs,
-                  unsigned powerChangePerCycle);
+  void initialize(unsigned long processingDelayMs, unsigned powerChangePerCycle);
 
   // The internal algorithm will translate power and rotation (in range -255 to
   // 255) and rotation to wheel power

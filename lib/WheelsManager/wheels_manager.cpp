@@ -2,24 +2,15 @@
 #include "pinout.hpp"
 #include "xy_drive_algorithm.hpp"
 
-void WheelsManager::initialize(unsigned long processingDelayMs,
-                               unsigned powerChangePerCycle) {
-  m_leftFrontWheel.setPins(
-      Pinout::WheelLF::PWMF, Pinout::WheelLF::PWMB, Pinout::WheelLF::DirectionF,
-      Pinout::WheelLF::DirectionB, Pinout::WheelLF::FeedbackF,
-      Pinout::WheelLF::FeedbackB);
-  m_leftRearWheel.setPins(
-      Pinout::WheelLR::PWMF, Pinout::WheelLR::PWMB, Pinout::WheelLR::DirectionF,
-      Pinout::WheelLR::DirectionB, Pinout::WheelLR::FeedbackF,
-      Pinout::WheelLR::FeedbackB);
-  m_rightFrontWheel.setPins(
-      Pinout::WheelRF::PWMF, Pinout::WheelRF::PWMB, Pinout::WheelRF::DirectionF,
-      Pinout::WheelRF::DirectionB, Pinout::WheelRF::FeedbackF,
-      Pinout::WheelRF::FeedbackB);
-  m_rightRearWheel.setPins(
-      Pinout::WheelRR::PWMF, Pinout::WheelRR::PWMB, Pinout::WheelRR::DirectionF,
-      Pinout::WheelRR::DirectionB, Pinout::WheelRR::FeedbackF,
-      Pinout::WheelRR::FeedbackB);
+void WheelsManager::initialize(unsigned long processingDelayMs, unsigned powerChangePerCycle) {
+  m_leftFrontWheel.setPins(Pinout::WheelLF::PWMF, Pinout::WheelLF::PWMB, Pinout::WheelLF::DirectionF,
+                           Pinout::WheelLF::DirectionB, Pinout::WheelLF::FeedbackF, Pinout::WheelLF::FeedbackB);
+  m_leftRearWheel.setPins(Pinout::WheelLR::PWMF, Pinout::WheelLR::PWMB, Pinout::WheelLR::DirectionF,
+                          Pinout::WheelLR::DirectionB, Pinout::WheelLR::FeedbackF, Pinout::WheelLR::FeedbackB);
+  m_rightFrontWheel.setPins(Pinout::WheelRF::PWMF, Pinout::WheelRF::PWMB, Pinout::WheelRF::DirectionF,
+                            Pinout::WheelRF::DirectionB, Pinout::WheelRF::FeedbackF, Pinout::WheelRF::FeedbackB);
+  m_rightRearWheel.setPins(Pinout::WheelRR::PWMF, Pinout::WheelRR::PWMB, Pinout::WheelRR::DirectionF,
+                           Pinout::WheelRR::DirectionB, Pinout::WheelRR::FeedbackF, Pinout::WheelRR::FeedbackB);
 
   // Initialize processing delay and ramping speed with default values
   setProcessingDelay(processingDelayMs);
@@ -73,8 +64,8 @@ unsigned WheelsManager::rampingSpeed() const {
 }
 
 bool WheelsManager::isRamping() const {
-  return m_leftFrontWheel.isRamping() || m_leftRearWheel.isRamping() ||
-         m_rightFrontWheel.isRamping() || m_rightRearWheel.isRamping();
+  return m_leftFrontWheel.isRamping() || m_leftRearWheel.isRamping() || m_rightFrontWheel.isRamping() ||
+         m_rightRearWheel.isRamping();
 }
 
 void WheelsManager::process() {
@@ -85,8 +76,7 @@ void WheelsManager::process() {
 }
 
 void WheelsManager::recalculateWheelsPower() {
-  auto const wheelsTargetPower =
-      XYDriveAlgorithm::translate(power(), rotation());
+  auto const wheelsTargetPower = XYDriveAlgorithm::translate(power(), rotation());
 
   // Serial.print("Set power: ");
   // Serial.print(power());

@@ -1,12 +1,8 @@
 #include "xy_drive_algorithm.hpp"
 #include <Arduino.h>
 
-XYDriveAlgorithm::Output XYDriveAlgorithm::translate(
-    int speed,
-    int rotation) {
-  int drive_power =
-      map(constrain(sqrt(pow(rotation, 2) + pow(speed, 2)), 0, 1000), 0, 1000, 0,
-          255);
+XYDriveAlgorithm::Output XYDriveAlgorithm::translate(int speed, int rotation) {
+  int drive_power = map(constrain(sqrt(pow(rotation, 2) + pow(speed, 2)), 0, 1000), 0, 1000, 0, 255);
 
   double angle = atan2(speed, rotation);
   int direction = (speed >= 0 ? 1 : -1);

@@ -7,19 +7,21 @@ import "nanopb.proto";
 // 0x40 - 0x4F - motor-related requests
 // 0x50 - 0x5F - motor-related responses
 
-// Header: 0x20
 message Log {
-    enum Type {
-        INVALID = 0;
-        DEBUG = 1;
-        INFO = 2;
-        WARNING = 3;
-        ERROR = 4;
-    }
+  enum Type {
+    INVALID = 0;
+    DEBUG = 1;
+    INFO = 2;
+    WARNING = 3;
+    ERROR = 4;
+  }
 
-    Type type = 1;
-    string content = 2 [(nanopb).max_length = 200];
+  // Header: 0x20
+
+  Type type = 1;
+  string content = 2 [ (nanopb).max_length = 200 ];
 }
 
-// Header: 0x01
-message HealthCheck {}
+message HealthCheck {
+  // Header: 0x01
+}

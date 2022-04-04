@@ -1,5 +1,5 @@
 #pragma once
 
 namespace Settings {
-    constexpr unsigned long SerialBaudRate{250000};
+constexpr unsigned long SerialBaudRate{250000};
 }
