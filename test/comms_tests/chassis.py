@@ -18,8 +18,10 @@ class Chassis:
 
     def read_message(self):
         length_bytes = self.arduino.read(2)
+        print("Length bytes: {}".format(length_bytes))
         if len(length_bytes) == 2:
-            message_length = struct.unpack("<H", length_bytes)
+            message_length, = struct.unpack("<H", length_bytes)
+            print("Received message length: {}".format(message_length))
             if message_length > 0:
                 message_data = self.arduino.read(message_length)
                 return self._message_from_bytes(message_data)

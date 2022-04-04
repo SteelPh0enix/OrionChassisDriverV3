@@ -23,9 +23,8 @@ void CommsManager::setHealthCheckHandler(HealthCheckHandler handler) {
   m_healthCheckHandler = handler;
 }
 
-bool CommsManager::createLogMessage(Log const& log, uint8_t* buffer, size_t bufferSize) {
-  pb_ostream_t messageStream = pb_ostream_from_buffer(buffer, bufferSize);
-  return pb_encode(&messageStream, Log_fields, &log);
+size_t CommsManager::createLogMessage(Log const* log, uint8_t* buffer, size_t bufferSize) {
+  return createMessage(Log_fields, MessageID::Log, static_cast<void const*>(log), buffer, bufferSize);
 }
 
 CommsManager::ParsingResult CommsManager::parseMessageAndCallHandler(uint8_t const* messageData,
@@ -51,4 +50,15 @@ CommsManager::ParsingResult CommsManager::parseMessageAndCallHandler(uint8_t con
   }
 
   return ParsingResult::PARSING_ERROR;
+}
+
+size_t CommsManager::createMessage(pb_msgdesc_t const* messageDescriptor,
+                                   MessageID messageID,
+                                   void const* messageData,
+                                   uint8_t* buffer,
+                                   size_t bufferLength) {
+  buffer[0] = static_cast<uint8_t>(messageID);
+  pb_ostream_t messageStream = pb_ostream_from_buffer(buffer + 1, bufferLength - 1);
+  pb_encode(&messageStream, messageDescriptor, messageData);
+  return messageStream.bytes_written + 1;
 }

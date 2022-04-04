@@ -19,7 +19,7 @@ class CommsManager {
 
   void setHealthCheckHandler(HealthCheckHandler handler);
 
-  static bool createLogMessage(Log const& log, uint8_t* buffer, size_t bufferSize);
+  static size_t createLogMessage(Log const* log, uint8_t* buffer, size_t bufferSize);
 
  private:
   enum class MessageID : uint8_t {
@@ -29,6 +29,11 @@ class CommsManager {
   };
 
   ParsingResult parseMessageAndCallHandler(uint8_t const* messageData, size_t messageLength, MessageID messageID);
+  static size_t createMessage(pb_msgdesc_t const* descriptor,
+                              MessageID messageID,
+                              void const* messageData,
+                              uint8_t* buffer,
+                              size_t bufferLength);
 
   HealthCheckHandler m_healthCheckHandler{nullptr};
 };

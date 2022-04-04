@@ -19,7 +19,7 @@ message Log {
   // Header: 0x20
 
   Type type = 1;
-  string content = 2 [ (nanopb).max_length = 200 ];
+  string content = 2 [(nanopb).max_length = 200];
 }
 
 message HealthCheck {

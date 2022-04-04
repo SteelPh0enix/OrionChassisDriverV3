@@ -10,55 +10,53 @@
 #endif
 
 /* Enum definitions */
-typedef enum _Log_Type {
-  Log_Type_INVALID = 0,
-  Log_Type_DEBUG = 1,
-  Log_Type_INFO = 2,
-  Log_Type_WARNING = 3,
-  Log_Type_ERROR = 4
+typedef enum _Log_Type { 
+    Log_Type_INVALID = 0, 
+    Log_Type_DEBUG = 1, 
+    Log_Type_INFO = 2, 
+    Log_Type_WARNING = 3, 
+    Log_Type_ERROR = 4 
 } Log_Type;
 
 /* Struct definitions */
 typedef struct _HealthCheck { /* Header: 0x01 */
-  char dummy_field;
+    char dummy_field;
 } HealthCheck;
 
-typedef struct _Log {
-  Log_Type type;
-  char content[201];
+typedef struct _Log { 
+    Log_Type type; 
+    char content[201]; 
 } Log;
+
 
 /* Helper constants for enums */
 #define _Log_Type_MIN Log_Type_INVALID
 #define _Log_Type_MAX Log_Type_ERROR
-#define _Log_Type_ARRAYSIZE ((Log_Type)(Log_Type_ERROR + 1))
+#define _Log_Type_ARRAYSIZE ((Log_Type)(Log_Type_ERROR+1))
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /* Initializer values for message structs */
-#define Log_init_default \
-  { _Log_Type_MIN, "" }
-#define HealthCheck_init_default \
-  { 0 }
-#define Log_init_zero \
-  { _Log_Type_MIN, "" }
-#define HealthCheck_init_zero \
-  { 0 }
+#define Log_init_default                         {_Log_Type_MIN, ""}
+#define HealthCheck_init_default                 {0}
+#define Log_init_zero                            {_Log_Type_MIN, ""}
+#define HealthCheck_init_zero                    {0}
 
 /* Field tags (for use in manual encoding/decoding) */
-#define Log_type_tag 1
-#define Log_content_tag 2
+#define Log_type_tag                             1
+#define Log_content_tag                          2
 
 /* Struct field encoding specification for nanopb */
-#define Log_FIELDLIST(X, a)              \
-  X(a, STATIC, SINGULAR, UENUM, type, 1) \
-  X(a, STATIC, SINGULAR, STRING, content, 2)
+#define Log_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, UENUM,    type,              1) \
+X(a, STATIC,   SINGULAR, STRING,   content,           2)
 #define Log_CALLBACK NULL
 #define Log_DEFAULT NULL
 
-#define HealthCheck_FIELDLIST(X, a)
+#define HealthCheck_FIELDLIST(X, a) \
 
 #define HealthCheck_CALLBACK NULL
 #define HealthCheck_DEFAULT NULL
@@ -71,8 +69,8 @@ extern const pb_msgdesc_t HealthCheck_msg;
 #define HealthCheck_fields &HealthCheck_msg
 
 /* Maximum encoded size of messages (where known) */
-#define HealthCheck_size 0
-#define Log_size 205
+#define HealthCheck_size                         0
+#define Log_size                                 205
 
 #ifdef __cplusplus
 } /* extern "C" */

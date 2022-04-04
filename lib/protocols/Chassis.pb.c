@@ -8,4 +8,9 @@
 
 PB_BIND(Log, Log, AUTO)
 
+
 PB_BIND(HealthCheck, HealthCheck, AUTO)
+
+
+
+
