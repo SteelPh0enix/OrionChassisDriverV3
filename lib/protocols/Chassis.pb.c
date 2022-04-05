@@ -6,10 +6,20 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
+PB_BIND(HealthCheck, HealthCheck, AUTO)
+
+
+PB_BIND(ChassisDirection, ChassisDirection, AUTO)
+
+
 PB_BIND(Log, Log, AUTO)
 
 
-PB_BIND(HealthCheck, HealthCheck, AUTO)
+PB_BIND(ChassisFeedback, ChassisFeedback, 2)
+
+
+PB_BIND(ChassisFeedback_WheelFeedback, ChassisFeedback_WheelFeedback, AUTO)
+
 
 
 

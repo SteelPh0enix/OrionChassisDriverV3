@@ -23,8 +23,17 @@ void CommsManager::setHealthCheckHandler(HealthCheckHandler handler) {
   m_healthCheckHandler = handler;
 }
 
+void CommsManager::setChassisDirectionHandler(ChassisDirectionHandler handler) {
+  m_chassisDirectionHandler = handler;
+}
+
 size_t CommsManager::createLogMessage(Log const* log, uint8_t* buffer, size_t bufferSize) {
   return createMessage(Log_fields, MessageID::Log, static_cast<void const*>(log), buffer, bufferSize);
+}
+
+size_t CommsManager::createChassisFeedbackMessage(ChassisFeedback const* feedback, uint8_t* buffer, size_t bufferSize) {
+  return createMessage(ChassisFeedback_fields, MessageID::ChassisFeedback, static_cast<void const*>(feedback), buffer,
+                       bufferSize);
 }
 
 CommsManager::ParsingResult CommsManager::parseMessageAndCallHandler(uint8_t const* messageData,
@@ -38,7 +47,18 @@ CommsManager::ParsingResult CommsManager::parseMessageAndCallHandler(uint8_t con
       HealthCheck message = HealthCheck_init_zero;
       isParsedCorrectly = pb_decode(&messageStream, HealthCheck_fields, &message);
       if (isParsedCorrectly) {
-        m_healthCheckHandler(message);
+        if (m_healthCheckHandler != nullptr) {
+          m_healthCheckHandler(message);
+        }
+      }
+    }
+    case MessageID::ChassisDirection: {
+      ChassisDirection message = ChassisDirection_init_zero;
+      isParsedCorrectly = pb_decode(&messageStream, ChassisDirection_fields, &message);
+      if (isParsedCorrectly) {
+        if (m_chassisDirectionHandler != nullptr) {
+          m_chassisDirectionHandler(message);
+        }
       }
     }
     default:

@@ -28,6 +28,11 @@ class WheelsManager {
   unsigned rampingSpeed() const;
   bool isRamping() const;
 
+  BTS7960Ramped const& leftFrontWheel() const;
+  BTS7960Ramped const& rightFrontWheel() const;
+  BTS7960Ramped const& leftRearWheel() const;
+  BTS7960Ramped const& rightRearWheel() const;
+
   // call this in `loop()` function, make sure it runs as often as possible to
   // prevent lags
   void process();

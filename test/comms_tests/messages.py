@@ -1,13 +1,21 @@
-from Chassis_pb2 import HealthCheck, Log
+from Chassis_pb2 import HealthCheck, Log, ChassisDirection, ChassisFeedback
 from enum import IntEnum
+
 
 class MessageID(IntEnum):
     Invalid = 0x00
     HealthCheck = 0x01
     Log = 0x20
+    ChassisDirection = 0x40
+    ChassisFeedback = 0x50
 
 
-message_types = [(HealthCheck, MessageID.HealthCheck), (Log, MessageID.Log)]
+message_types = [
+    (HealthCheck, MessageID.HealthCheck),
+    (Log, MessageID.Log),
+    (ChassisDirection, MessageID.ChassisDirection),
+    (ChassisFeedback, MessageID.ChassisFeedback),
+]
 
 
 def get_message_id_by_type(message):

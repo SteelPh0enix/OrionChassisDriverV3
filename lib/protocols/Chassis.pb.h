@@ -18,15 +18,41 @@ typedef enum _Log_Type {
     Log_Type_ERROR = 4 
 } Log_Type;
 
+typedef enum _ChassisFeedback_WheelFeedback_Direction { 
+    ChassisFeedback_WheelFeedback_Direction_NONE = 0, 
+    ChassisFeedback_WheelFeedback_Direction_FORWARD = 1, 
+    ChassisFeedback_WheelFeedback_Direction_BACKWARD = 2 
+} ChassisFeedback_WheelFeedback_Direction;
+
 /* Struct definitions */
 typedef struct _HealthCheck { /* Header: 0x01 */
     char dummy_field;
 } HealthCheck;
 
+typedef struct _ChassisDirection { 
+    /* Header: 0x40 */
+    int32_t power; 
+    int32_t rotation; 
+} ChassisDirection;
+
+typedef struct _ChassisFeedback_WheelFeedback { 
+    int32_t current_power; 
+    int32_t target_power; 
+    float current_draw; 
+    ChassisFeedback_WheelFeedback_Direction direction; 
+    char id[51]; 
+} ChassisFeedback_WheelFeedback;
+
 typedef struct _Log { 
     Log_Type type; 
     char content[201]; 
 } Log;
+
+typedef struct _ChassisFeedback { 
+    int32_t chassis_power; 
+    int32_t chassis_rotation; 
+    ChassisFeedback_WheelFeedback wheels[4]; 
+} ChassisFeedback;
 
 
 /* Helper constants for enums */
@@ -34,41 +60,93 @@ typedef struct _Log {
 #define _Log_Type_MAX Log_Type_ERROR
 #define _Log_Type_ARRAYSIZE ((Log_Type)(Log_Type_ERROR+1))
 
+#define _ChassisFeedback_WheelFeedback_Direction_MIN ChassisFeedback_WheelFeedback_Direction_NONE
+#define _ChassisFeedback_WheelFeedback_Direction_MAX ChassisFeedback_WheelFeedback_Direction_BACKWARD
+#define _ChassisFeedback_WheelFeedback_Direction_ARRAYSIZE ((ChassisFeedback_WheelFeedback_Direction)(ChassisFeedback_WheelFeedback_Direction_BACKWARD+1))
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /* Initializer values for message structs */
-#define Log_init_default                         {_Log_Type_MIN, ""}
 #define HealthCheck_init_default                 {0}
-#define Log_init_zero                            {_Log_Type_MIN, ""}
+#define ChassisDirection_init_default            {0, 0}
+#define Log_init_default                         {_Log_Type_MIN, ""}
+#define ChassisFeedback_init_default             {0, 0, {ChassisFeedback_WheelFeedback_init_default, ChassisFeedback_WheelFeedback_init_default, ChassisFeedback_WheelFeedback_init_default, ChassisFeedback_WheelFeedback_init_default}}
+#define ChassisFeedback_WheelFeedback_init_default {0, 0, 0, _ChassisFeedback_WheelFeedback_Direction_MIN, ""}
 #define HealthCheck_init_zero                    {0}
+#define ChassisDirection_init_zero               {0, 0}
+#define Log_init_zero                            {_Log_Type_MIN, ""}
+#define ChassisFeedback_init_zero                {0, 0, {ChassisFeedback_WheelFeedback_init_zero, ChassisFeedback_WheelFeedback_init_zero, ChassisFeedback_WheelFeedback_init_zero, ChassisFeedback_WheelFeedback_init_zero}}
+#define ChassisFeedback_WheelFeedback_init_zero  {0, 0, 0, _ChassisFeedback_WheelFeedback_Direction_MIN, ""}
 
 /* Field tags (for use in manual encoding/decoding) */
+#define ChassisDirection_power_tag               1
+#define ChassisDirection_rotation_tag            2
+#define ChassisFeedback_WheelFeedback_current_power_tag 1
+#define ChassisFeedback_WheelFeedback_target_power_tag 2
+#define ChassisFeedback_WheelFeedback_current_draw_tag 3
+#define ChassisFeedback_WheelFeedback_direction_tag 4
+#define ChassisFeedback_WheelFeedback_id_tag     5
 #define Log_type_tag                             1
 #define Log_content_tag                          2
+#define ChassisFeedback_chassis_power_tag        1
+#define ChassisFeedback_chassis_rotation_tag     2
+#define ChassisFeedback_wheels_tag               3
 
 /* Struct field encoding specification for nanopb */
+#define HealthCheck_FIELDLIST(X, a) \
+
+#define HealthCheck_CALLBACK NULL
+#define HealthCheck_DEFAULT NULL
+
+#define ChassisDirection_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, INT32,    power,             1) \
+X(a, STATIC,   SINGULAR, INT32,    rotation,          2)
+#define ChassisDirection_CALLBACK NULL
+#define ChassisDirection_DEFAULT NULL
+
 #define Log_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UENUM,    type,              1) \
 X(a, STATIC,   SINGULAR, STRING,   content,           2)
 #define Log_CALLBACK NULL
 #define Log_DEFAULT NULL
 
-#define HealthCheck_FIELDLIST(X, a) \
+#define ChassisFeedback_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, INT32,    chassis_power,     1) \
+X(a, STATIC,   SINGULAR, INT32,    chassis_rotation,   2) \
+X(a, STATIC,   FIXARRAY, MESSAGE,  wheels,            3)
+#define ChassisFeedback_CALLBACK NULL
+#define ChassisFeedback_DEFAULT NULL
+#define ChassisFeedback_wheels_MSGTYPE ChassisFeedback_WheelFeedback
 
-#define HealthCheck_CALLBACK NULL
-#define HealthCheck_DEFAULT NULL
+#define ChassisFeedback_WheelFeedback_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, INT32,    current_power,     1) \
+X(a, STATIC,   SINGULAR, INT32,    target_power,      2) \
+X(a, STATIC,   SINGULAR, FLOAT,    current_draw,      3) \
+X(a, STATIC,   SINGULAR, UENUM,    direction,         4) \
+X(a, STATIC,   SINGULAR, STRING,   id,                5)
+#define ChassisFeedback_WheelFeedback_CALLBACK NULL
+#define ChassisFeedback_WheelFeedback_DEFAULT NULL
 
-extern const pb_msgdesc_t Log_msg;
 extern const pb_msgdesc_t HealthCheck_msg;
+extern const pb_msgdesc_t ChassisDirection_msg;
+extern const pb_msgdesc_t Log_msg;
+extern const pb_msgdesc_t ChassisFeedback_msg;
+extern const pb_msgdesc_t ChassisFeedback_WheelFeedback_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
-#define Log_fields &Log_msg
 #define HealthCheck_fields &HealthCheck_msg
+#define ChassisDirection_fields &ChassisDirection_msg
+#define Log_fields &Log_msg
+#define ChassisFeedback_fields &ChassisFeedback_msg
+#define ChassisFeedback_WheelFeedback_fields &ChassisFeedback_WheelFeedback_msg
 
 /* Maximum encoded size of messages (where known) */
+#define ChassisDirection_size                    22
+#define ChassisFeedback_WheelFeedback_size       81
+#define ChassisFeedback_size                     354
 #define HealthCheck_size                         0
 #define Log_size                                 205
 

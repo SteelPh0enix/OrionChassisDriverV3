@@ -4,7 +4,7 @@
 
 class BTS7960 : public Module {
  public:
-  enum class Direction { None, Forward, Backward };
+  enum class Direction { None = 0, Forward = 1, Backward = 2 };
 
   BTS7960() = default;
   BTS7960(uint8_t pwmFPin,

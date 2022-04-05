@@ -68,6 +68,22 @@ bool WheelsManager::isRamping() const {
          m_rightRearWheel.isRamping();
 }
 
+BTS7960Ramped const& WheelsManager::leftFrontWheel() const {
+  return m_leftFrontWheel;
+}
+
+BTS7960Ramped const& WheelsManager::rightFrontWheel() const {
+  return m_rightFrontWheel;
+}
+
+BTS7960Ramped const& WheelsManager::leftRearWheel() const {
+  return m_leftRearWheel;
+}
+
+BTS7960Ramped const& WheelsManager::rightRearWheel() const {
+  return m_rightRearWheel;
+}
+
 void WheelsManager::process() {
   m_leftFrontWheel.process();
   m_leftRearWheel.process();
