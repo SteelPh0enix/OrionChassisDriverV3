@@ -1,8 +1,7 @@
-from typing import Dict
+from typing import Dict, List
 import inputs
 from enum import Enum
 from utils import interpolate
-from time import sleep
 
 
 class GamepadInputType(Enum):
@@ -105,34 +104,34 @@ GAMEPAD_MAPPINGS = {
             "name": "AxisX",
             "minimum_value": -32768,
             "maximum_value": 32768,
-            "dead_zone": 0,
+            "dead_zone": 3000,
         },
         "ABS_Y": {
             "type": GamepadInputType.AXIS,
             "name": "AxisY",
             "minimum_value": -32768,
             "maximum_value": 32768,
-            "dead_zone": 0,
+            "dead_zone": 3000,
         },
         "ABS_RX": {
             "type": GamepadInputType.AXIS,
             "name": "AxisRightX",
             "minimum_value": -32768,
             "maximum_value": 32768,
-            "dead_zone": 0,
+            "dead_zone": 3000,
         },
         "ABS_RY": {
             "type": GamepadInputType.AXIS,
             "name": "AxisRightY",
             "minimum_value": -32768,
             "maximum_value": 32768,
-            "dead_zone": 0,
+            "dead_zone": 3000,
         },
     }
 }
 
 
-class InputEvent:
+class GamepadInputEvent:
     """Value is always in range -1 : 1, every axis input is mapped to this range, buttons have only True/False states"""
 
     def __init__(self, type: GamepadInputType, name: str, value: float) -> None:
@@ -160,12 +159,15 @@ class GamepadManager:
         else:
             raise RuntimeError("No gamepad detected!")
 
-    def get_events(self):
+    def events(self):
+        event_list: List[GamepadInputEvent] = list()
         for event in self._gamepad.read():
-            # self._print_gamepad_event(event, "ABS_X")
+            # self._print_gamepad_event(event, "ABS_Z")
             input_event = self._parse_gamepad_event(event)
             if input_event.valid():
-                print(input_event)
+                event_list.append(input_event)
+
+        return event_list
 
     @staticmethod
     def _print_gamepad_event(event: inputs.InputEvent, code_filter: str = None):
@@ -188,40 +190,44 @@ class GamepadManager:
             return dict()
 
     @staticmethod
-    def _map_input_event(event: inputs.InputEvent, mapping: Dict) -> InputEvent:
+    def _map_input_event(event: inputs.InputEvent, mapping: Dict) -> GamepadInputEvent:
         if mapping is None or bool(mapping) is False or event is None:
-            return InputEvent(GamepadInputType.NONE, "", 0)
+            return GamepadInputEvent(GamepadInputType.NONE, "", 0)
 
         mapping_type = mapping["type"]
 
         if mapping_type is GamepadInputType.BUTTON:
             button_state = True if event.state == mapping["state_pressed"] else False
-            return InputEvent(GamepadInputType.BUTTON, mapping["name"], button_state)
+            return GamepadInputEvent(
+                GamepadInputType.BUTTON, mapping["name"], button_state
+            )
         elif mapping_type is GamepadInputType.AXIS:
+            mapped_axis_value = 0
             if abs(event.state) >= mapping["dead_zone"]:
                 mapped_axis_value = interpolate(
                     event.state,
                     (mapping["minimum_value"], mapping["maximum_value"]),
                     (-1, 1),
                 )
-                return InputEvent(
-                    GamepadInputType.AXIS, mapping["name"], mapped_axis_value
-                )
+            return GamepadInputEvent(
+                GamepadInputType.AXIS, mapping["name"], mapped_axis_value
+            )
         elif mapping_type is GamepadInputType.AXIS_SINGLE:
+            mapped_axis_value = 0
             if abs(event.state) >= mapping["dead_zone"]:
                 mapped_axis_value = interpolate(
                     event.state,
                     (mapping["minimum_value"], mapping["maximum_value"]),
                     (0, 1),
                 )
-                return InputEvent(
-                    GamepadInputType.AXIS_SINGLE, mapping["name"], mapped_axis_value
-                )
+            return GamepadInputEvent(
+                GamepadInputType.AXIS_SINGLE, mapping["name"], mapped_axis_value
+            )
 
-        return InputEvent(GamepadInputType.NONE, "", 0)
+        return GamepadInputEvent(GamepadInputType.NONE, "", 0)
 
     @staticmethod
-    def _parse_gamepad_event(event: inputs.InputEvent) -> InputEvent:
+    def _parse_gamepad_event(event: inputs.InputEvent) -> GamepadInputEvent:
         # mapping should contain a map with event codes as keys
         mapping = GamepadManager._find_gamepad_mapping(str(event.device))
         if not bool(mapping):
@@ -232,14 +238,17 @@ class GamepadManager:
         if event.code in mapping:
             return GamepadManager._map_input_event(event, mapping[event.code])
 
-        return InputEvent(GamepadInputType.NONE, "", 0)
+        return GamepadInputEvent(GamepadInputType.NONE, "", 0)
 
 
 def main():
     gamepad_manager = GamepadManager()
 
     while True:
-        gamepad_manager.get_events()
+        events = gamepad_manager.events()
+        print(f"Events count: {len(events)}")
+        for event in events:
+            print(event)
 
 
 if __name__ == "__main__":
