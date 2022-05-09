@@ -5,8 +5,8 @@
 # to 
 # import proto.nanopb_pb2 as nanopb__pb2
 
-$ProtoCDirectory = "../../.pio/libdeps/megaatmega2560/Nanopb/generator"
-$GenerateProtoCommand = "$ProtoCDirectory/protoc -I../../protocols --python_out=. Chassis.proto" 
+$ProtoCDirectory = "F:\nanopb-0.4.5-windows-x86\generator-bin"
+$GenerateProtoCommand = "$ProtoCDirectory/protoc.exe -I../../protocols --python_out=. Chassis.proto" 
 
 # Generate the files
 Invoke-Expression $GenerateProtoCommand

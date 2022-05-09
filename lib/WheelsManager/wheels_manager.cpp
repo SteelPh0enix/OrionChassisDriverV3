@@ -18,18 +18,18 @@ void WheelsManager::initialize(unsigned long processingDelayMs, unsigned powerCh
 }
 
 void WheelsManager::setPower(int power) {
-  m_power = constrain(power, -1000, 1000);
+  m_power = constrain(power, -PowerLimit, PowerLimit);
   recalculateWheelsPower();
 }
 
 void WheelsManager::setRotation(int rotation) {
-  m_rotation = constrain(rotation, -1000, 1000);
+  m_rotation = constrain(rotation, -PowerLimit, PowerLimit);
   recalculateWheelsPower();
 }
 
 void WheelsManager::setPowerAndRotation(int power, int rotation) {
-  m_power = constrain(power, -1000, 1000);
-  m_rotation = constrain(rotation, -1000, 1000);
+  m_power = constrain(power, -PowerLimit, PowerLimit);
+  m_rotation = constrain(rotation, -PowerLimit, PowerLimit);
   recalculateWheelsPower();
 }
 

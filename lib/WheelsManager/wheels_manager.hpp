@@ -1,8 +1,11 @@
 #pragma once
 #include "bts7960_ramped.hpp"
+#include "settings.hpp" 
 
 class WheelsManager {
  public:
+  static constexpr int PowerLimit = Settings::WheelPowerLimit;
+
   void initialize(unsigned long processingDelayMs, unsigned powerChangePerCycle);
 
   // The internal algorithm will translate power and rotation (in range -255 to
