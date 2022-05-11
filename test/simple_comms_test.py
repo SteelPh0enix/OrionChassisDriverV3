@@ -2,7 +2,7 @@ import serial
 import struct
 import time
 
-ARDUINO_COM_PORT = "COM9"
+ARDUINO_COM_PORT = "COM5"
 ARDUINO_BAUDRATE = 9600
 
 def main():

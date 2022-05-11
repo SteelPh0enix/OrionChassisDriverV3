@@ -76,7 +76,7 @@ void setup() {
   commsManager.setHealthCheckHandler(handleHealthCheck);
   commsManager.setChassisDirectionHandler(handleChassisDirection);
 
-  wheelsManager.initialize(100, 5);
+  wheelsManager.initialize(Settings::ChassisProcessingDelay, Settings::WheelPowerChangePerCycle);
 }
 
 void loop() {

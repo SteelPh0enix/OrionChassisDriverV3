@@ -17,7 +17,7 @@ class ChassisDriver:
 
     def connect(self) -> None:
         self.stm = serial.Serial(port=self.port, baudrate=self.baud)
-        time.sleep(2.5)
+        time.sleep(3.5)
 
     def send_speed_and_rotation(self, speed: int, rotation: int) -> None:
         print(f"Setting speed to {speed} and rotation to {rotation}")

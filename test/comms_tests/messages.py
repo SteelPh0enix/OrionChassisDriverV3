@@ -1,4 +1,4 @@
-from Chassis_pb2 import HealthCheck, Log, ChassisDirection, ChassisFeedback
+from .Chassis_pb2 import HealthCheck, Log, ChassisDirection, ChassisFeedback
 from enum import IntEnum
 
 

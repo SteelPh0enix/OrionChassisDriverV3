@@ -2,8 +2,8 @@ from email import message
 import serial
 import time
 import struct
-from Chassis_pb2 import HealthCheck, Log, ChassisDirection, ChassisFeedback
-from messages import get_message_id_by_type, get_message_type_by_id
+from .Chassis_pb2 import HealthCheck, Log, ChassisDirection, ChassisFeedback
+from .messages import get_message_id_by_type, get_message_type_by_id
 
 
 class Chassis:

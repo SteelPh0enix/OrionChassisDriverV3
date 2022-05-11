@@ -7,7 +7,7 @@ from copy import deepcopy
 class GamepadThread(Thread):
     def __init__(
         self,
-        name: str,
+        name: str = "gamepad_thread",
     ) -> None:
         super().__init__(name=name, daemon=True)
 
