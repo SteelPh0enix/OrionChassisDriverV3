@@ -40,4 +40,15 @@ constexpr PinT DirectionB{29};
 constexpr PinT FeedbackF{A6};
 constexpr PinT FeedbackB{A7};
 }  // namespace WheelLR
+
+namespace Encoders {
+constexpr PinT Encoder1A{A8};
+constexpr PinT Encoder1B{A9};
+constexpr PinT Encoder2A{A10};
+constexpr PinT Encoder2B{A11};
+constexpr PinT Encoder3A{A12};
+constexpr PinT Encoder3B{A13};
+constexpr PinT Encoder4A{A14};
+constexpr PinT Encoder4B{A15};
+}  // namespace Encoders
 }  // namespace Pinout
