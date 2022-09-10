@@ -5,6 +5,8 @@ from comms_tests.chassis import Chassis
 TRANSMISSION_DELAY_SECONDS = 0.1
 SPEED_AXIS_NAME = "AxisY"
 ROTATION_AXIS_NAME = "AxisX"
+COM_PORT = "COM3"
+COM_BAUDRATE = 250000
 
 
 def main():
@@ -15,7 +17,7 @@ def main():
         exit(1)
 
     try:
-        chassis = Chassis("COM5", 250000)
+        chassis = Chassis(COM_PORT, COM_BAUDRATE)
         chassis.checkConnection()
     except Exception as ex:
         print(f"Cannot connect to chassis, reason: {ex}")
