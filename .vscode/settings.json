@@ -1,3 +1,7 @@
 {
-    "C_Cpp.intelliSenseEngine": "Default"
+    "C_Cpp.intelliSenseEngine": "Default",
+    "cSpell.words": [
+        "PWMB",
+        "PWMF"
+    ]
 }
