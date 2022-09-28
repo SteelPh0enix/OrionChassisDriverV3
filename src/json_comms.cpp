@@ -37,6 +37,10 @@ void JSONComms::tryReadingInput(Stream& stream) {
   }
 }
 
-void JSONComms::sendChassisFeedback(ChassisFeedback const& feedback) {}
+void JSONComms::sendChassisFeedback(ChassisFeedback const& feedback) {
+  
+}
 
-void JSONComms::setXYDriveMessageCallback(XYDriveMessageCallbackT callback) {}
+void JSONComms::setXYDriveMessageCallback(XYDriveMessageCallbackT callback) {
+  callbackXYDriveMessage = callback;
+}

@@ -3,11 +3,13 @@
 #include <json_comms.hpp>
 #include <settings.hpp>
 #include "chassis.hpp"
+#include "scheduler.hpp"
 
 bool ledState = false;
 
 Chassis chassis;
 JSONComms comms;
+Scheduler feedbackScheduler;
 
 void blink() {
   ledState = !ledState;
@@ -18,17 +20,20 @@ void handleDriveMessage(XYDriveMessage message) {
   chassis.setRawMovement(message.x, message.y);
 }
 
+void sendFeedback() {}
+
 void setup() {
   Serial.begin(Settings::SerialBaudRate);
   pinMode(LED_BUILTIN, OUTPUT);
+  feedbackScheduler.addFunction(sendFeedback, Settings::FeedbackDelayMs);
 
   comms.setXYDriveMessageCallback(handleDriveMessage);
-
   chassis.initialize(Settings::ChassisProcessingDelay, Settings::WheelPowerChangePerCycle);
 }
 
 void loop() {
   chassis.process();
+  feedbackScheduler.process();
   comms.tryReadingInput(Serial);
   blink();
 }
