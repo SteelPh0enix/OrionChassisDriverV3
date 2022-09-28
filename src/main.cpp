@@ -1,11 +1,11 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <settings.hpp>
-#include "wheels_manager.hpp"
+#include "chassis.hpp"
 
 bool ledState = false;
 
-WheelsManager wheelsManager;
+Chassis chassis;
 
 void blink() {
   ledState = !ledState;
@@ -13,11 +13,12 @@ void blink() {
 }
 
 void setup() {
+  Serial.begin(Settings::SerialBaudRate);
   pinMode(LED_BUILTIN, OUTPUT);
 
-  wheelsManager.initialize(Settings::ChassisProcessingDelay, Settings::WheelPowerChangePerCycle);
+  chassis.initialize(Settings::ChassisProcessingDelay, Settings::WheelPowerChangePerCycle);
 }
 
 void loop() {
-  wheelsManager.process();
+  chassis.process();
 }
