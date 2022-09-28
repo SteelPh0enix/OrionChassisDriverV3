@@ -20,7 +20,10 @@ void handleDriveMessage(XYDriveMessage message) {
   chassis.setRawMovement(message.x, message.y);
 }
 
-void sendFeedback() {}
+void sendFeedback() {
+  auto feedback = chassis.feedback();
+  comms.sendChassisFeedback(Serial, feedback);
+}
 
 void setup() {
   Serial.begin(Settings::SerialBaudRate);
@@ -33,7 +36,7 @@ void setup() {
 
 void loop() {
   chassis.process();
-  feedbackScheduler.process();
   comms.tryReadingInput(Serial);
+  feedbackScheduler.process();
   blink();
 }

@@ -19,7 +19,7 @@ XYDriveMessage getXYDriveMessageFromDoc(JsonObject const& json) {
 }
 
 void JSONComms::tryReadingInput(Stream& stream) {
-  DeserializationError result = deserializeJson(jsonDoc, stream);
+  auto result = deserializeJson(jsonDoc, stream);
 
   if (!result) {
     return;
@@ -29,7 +29,7 @@ void JSONComms::tryReadingInput(Stream& stream) {
 
   if (jsonContainsXYDriveMessage(json)) {
     if (validateJsonXYDriveMessage(json)) {
-      XYDriveMessage msg = getXYDriveMessageFromDoc(json);
+      auto msg = getXYDriveMessageFromDoc(json);
       if (callbackXYDriveMessage != nullptr) {
         callbackXYDriveMessage(msg);
       }
@@ -40,7 +40,7 @@ void JSONComms::tryReadingInput(Stream& stream) {
 }
 
 void addWheelFeedbackToJson(JsonObject& json, ChassisFeedback::WheelFeedback const& feedback, char const* keyName) {
-  JsonObject wheelJson = json.createNestedObject(keyName);
+  auto wheelJson = json.createNestedObject(keyName);
   wheelJson[JsonKey::Feedback::Wheel::CurrentPower] = feedback.currentPower;
   wheelJson[JsonKey::Feedback::Wheel::CurrentDraw] = feedback.currentDraw;
   wheelJson[JsonKey::Feedback::Wheel::Direction] = static_cast<int>(feedback.direction);
@@ -48,7 +48,7 @@ void addWheelFeedbackToJson(JsonObject& json, ChassisFeedback::WheelFeedback con
 }
 
 void JSONComms::sendChassisFeedback(Stream& stream, ChassisFeedback const& feedback) {
-  JsonObject json = jsonDoc.to<JsonObject>();
+  auto json = jsonDoc.to<JsonObject>();
 
   // dummy fields, to be filled in future
   json[JsonKey::Feedback::ErrorCode] = 0;
