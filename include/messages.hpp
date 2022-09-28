@@ -6,7 +6,7 @@ struct XYDriveMessage {
 };
 
 struct ChassisFeedback {
-  struct MotorFeedback {
+  struct WheelFeedback {
     int currentPower;
     int targetPower;
     enum class Direction { None = 0, Forward = 1, Backward = -1 } direction;

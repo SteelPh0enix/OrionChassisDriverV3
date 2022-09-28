@@ -8,8 +8,8 @@ void Chassis::process() {
   wheels.process();
 }
 
-ChassisFeedback::MotorFeedback motorFeedback(BTS7960Ramped const& motor) {
-  ChassisFeedback::MotorFeedback feedback{};
+ChassisFeedback::WheelFeedback motorFeedback(BTS7960Ramped const& motor) {
+  ChassisFeedback::WheelFeedback feedback{};
 
   feedback.currentPower = motor.power();
   feedback.targetPower = motor.targetPower();
@@ -17,13 +17,13 @@ ChassisFeedback::MotorFeedback motorFeedback(BTS7960Ramped const& motor) {
 
   switch (motor.direction()) {
     case BTS7960::Direction::None:
-      feedback.direction = ChassisFeedback::MotorFeedback::Direction::None;
+      feedback.direction = ChassisFeedback::WheelFeedback::Direction::None;
       break;
     case BTS7960::Direction::Forward:
-      feedback.direction = ChassisFeedback::MotorFeedback::Direction::Forward;
+      feedback.direction = ChassisFeedback::WheelFeedback::Direction::Forward;
       break;
     case BTS7960::Direction::Backward:
-      feedback.direction = ChassisFeedback::MotorFeedback::Direction::Backward;
+      feedback.direction = ChassisFeedback::WheelFeedback::Direction::Backward;
       break;
   }
 

@@ -35,10 +35,35 @@ void JSONComms::tryReadingInput(Stream& stream) {
       }
     }
   }
+
+  jsonDoc.clear();
 }
 
-void JSONComms::sendChassisFeedback(ChassisFeedback const& feedback) {
-  
+void addWheelFeedbackToJson(JsonObject& json, ChassisFeedback::WheelFeedback const& feedback, char const* keyName) {
+  JsonObject wheelJson = json.createNestedObject(keyName);
+  wheelJson[JsonKey::Feedback::Wheel::CurrentPower] = feedback.currentPower;
+  wheelJson[JsonKey::Feedback::Wheel::CurrentDraw] = feedback.currentDraw;
+  wheelJson[JsonKey::Feedback::Wheel::Direction] = static_cast<int>(feedback.direction);
+  wheelJson[JsonKey::Feedback::Wheel::TargetPower] = feedback.targetPower;
+}
+
+void JSONComms::sendChassisFeedback(Stream& stream, ChassisFeedback const& feedback) {
+  JsonObject json = jsonDoc.to<JsonObject>();
+
+  // dummy fields, to be filled in future
+  json[JsonKey::Feedback::ErrorCode] = 0;
+  json[JsonKey::Feedback::ErrorDescription] = "";
+
+  json[JsonKey::Feedback::Power] = feedback.power;
+  json[JsonKey::Feedback::Rotation] = feedback.rotation;
+
+  addWheelFeedbackToJson(json, feedback.leftFront, JsonKey::Feedback::LeftFrontWheelPWM);
+  addWheelFeedbackToJson(json, feedback.rightFront, JsonKey::Feedback::RightFrontWheelPWM);
+  addWheelFeedbackToJson(json, feedback.leftRear, JsonKey::Feedback::LeftRearWheelPWM);
+  addWheelFeedbackToJson(json, feedback.rightRear, JsonKey::Feedback::RightRearWheelPWM);
+
+  serializeJson(jsonDoc, stream);
+  jsonDoc.clear();
 }
 
 void JSONComms::setXYDriveMessageCallback(XYDriveMessageCallbackT callback) {

@@ -8,7 +8,7 @@ class JSONComms {
   using XYDriveMessageCallbackT = void (*)(XYDriveMessage);
 
   void tryReadingInput(Stream& stream);
-  void sendChassisFeedback(ChassisFeedback const& feedback);
+  void sendChassisFeedback(Stream& stream, ChassisFeedback const& feedback);
 
   void setXYDriveMessageCallback(XYDriveMessageCallbackT callback);
 
