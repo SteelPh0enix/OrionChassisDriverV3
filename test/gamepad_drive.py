@@ -1,6 +1,6 @@
 from gamepad_thread import GamepadThread
 from time import sleep
-from comms_tests.chassis import Chassis
+from chassis_json import JsonChassis
 
 TRANSMISSION_DELAY_SECONDS = 0.1
 SPEED_AXIS_NAME = "AxisY"
@@ -15,8 +15,7 @@ def main():
         exit(1)
 
     try:
-        chassis = Chassis("COM5", 250000)
-        chassis.checkConnection()
+        chassis = JsonChassis("COM5", 250000)
     except Exception as ex:
         print(f"Cannot connect to chassis, reason: {ex}")
         exit(2)
@@ -33,8 +32,8 @@ def main():
             current_rotation = int(current_state[ROTATION_AXIS_NAME] * 1000)
 
         # print(f"Current speed: {current_speed}, rotation: {current_rotation}")
-        print(chassis.drive(current_speed, current_rotation))
-
+        chassis.send_power_and_rotation(current_speed, current_rotation)
+        # print(chassis.fetch_feedback_string())
         sleep(TRANSMISSION_DELAY_SECONDS)
 
 
