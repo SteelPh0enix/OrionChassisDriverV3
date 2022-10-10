@@ -10,7 +10,7 @@ class GamepadInputType(Enum):
     AXIS = 2
     AXIS_SINGLE = 3
 
-    def __str__(self) -> str:
+    def __str__(self):
         if self is GamepadInputType.NONE:
             return "None"
         elif self is GamepadInputType.BUTTON:
@@ -150,7 +150,7 @@ class GamepadInputEvent:
 
 
 class GamepadManager:
-    def __init__(self, gamepad=None) -> None:
+    def __init__(self, gamepad=None):
         self._gamepad = None
 
         if gamepad is None and len(inputs.devices.gamepads) > 0:
