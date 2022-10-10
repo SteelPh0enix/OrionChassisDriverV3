@@ -13,13 +13,15 @@ def main():
     try:
         gamepad_thread = GamepadThread()
     except RuntimeError as rt:
-        print(f"Cannot create gamepad listener, reason: {rt}")
+        # print(f"Cannot create gamepad listener, reason: {rt}")
+        print("Cannot create gamepad listener, reason: {}".format(rt))
         exit(1)
 
     try:
         chassis = JsonChassis(CHASSIS_COM_PORT, 250000)
     except Exception as ex:
-        print(f"Cannot connect to chassis, reason: {ex}")
+        # print(f"Cannot connect to chassis, reason: {ex}")
+        print("Cannot connect to chassis, reason: {}".format(ex))
         exit(2)
 
     gamepad_thread.start()
