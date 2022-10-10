@@ -135,7 +135,7 @@ GAMEPAD_MAPPINGS["Logitech Gamepad F710"] = GAMEPAD_MAPPINGS["Microsoft X-Box 36
 class GamepadInputEvent:
     """Value is always in range -1 : 1, every axis input is mapped to this range, buttons have only True/False states"""
 
-    def __init__(self, type: GamepadInputType, name: str, value: float) -> None:
+    def __init__(self, type, name, value):
         self.type = type
         self.name = name
         self.value = value
@@ -143,15 +143,15 @@ class GamepadInputEvent:
     def valid(self):
         return self.type is not GamepadInputType.NONE
 
-    def __str__(self) -> str:
+    def __str__(self):
         return "Type: {0}, name: {1}, value: {2}".format(
             str(self.type), self.name, self.value
         )
 
 
 class GamepadManager:
-    def __init__(self, gamepad: inputs.GamePad = None) -> None:
-        self._gamepad: inputs.GamePad = None
+    def __init__(self, gamepad=None) -> None:
+        self._gamepad = None
 
         if gamepad is None and len(inputs.devices.gamepads) > 0:
             self._gamepad = inputs.devices.gamepads[0]
@@ -161,7 +161,7 @@ class GamepadManager:
             raise RuntimeError("No gamepad detected!")
 
     def events(self):
-        event_list: List[GamepadInputEvent] = list()
+        event_list = list()
         for event in self._gamepad.read():
             # self._print_gamepad_event(event, "ABS_Z")
             input_event = self._parse_gamepad_event(event)
@@ -171,7 +171,7 @@ class GamepadManager:
         return event_list
 
     @staticmethod
-    def _print_gamepad_event(event: inputs.InputEvent, code_filter: str = None):
+    def _print_gamepad_event(event, code_filter=None):
         if code_filter is None or event.code == code_filter:
             print(
                 "Device: {0}, timestamp: {1}, code: {2}, state: {3}, ev_type: {4}".format(
@@ -184,14 +184,14 @@ class GamepadManager:
             )
 
     @staticmethod
-    def _find_gamepad_mapping(device_name: str) -> Dict:
+    def _find_gamepad_mapping(device_name):
         if device_name in GAMEPAD_MAPPINGS:
             return GAMEPAD_MAPPINGS[device_name]
         else:
             return dict()
 
     @staticmethod
-    def _map_input_event(event: inputs.InputEvent, mapping: Dict) -> GamepadInputEvent:
+    def _map_input_event(event, mapping):
         if mapping is None or bool(mapping) is False or event is None:
             return GamepadInputEvent(GamepadInputType.NONE, "", 0)
 
@@ -228,7 +228,7 @@ class GamepadManager:
         return GamepadInputEvent(GamepadInputType.NONE, "", 0)
 
     @staticmethod
-    def _parse_gamepad_event(event: inputs.InputEvent) -> GamepadInputEvent:
+    def _parse_gamepad_event(event):
         # mapping should contain a map with event codes as keys
         mapping = GamepadManager._find_gamepad_mapping(str(event.device))
         if not bool(mapping):
