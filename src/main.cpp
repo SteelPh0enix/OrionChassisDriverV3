@@ -23,6 +23,7 @@ void handleDriveMessage(XYDriveMessage message) {
 void sendFeedback() {
   auto feedback = chassis.feedback();
   comms.sendChassisFeedback(Serial, feedback);
+  blink();
 }
 
 void setup() {
@@ -38,5 +39,4 @@ void loop() {
   chassis.process();
   comms.tryReadingInput(Serial);
   feedbackScheduler.process();
-  blink();
 }

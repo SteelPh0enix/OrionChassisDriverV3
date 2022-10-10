@@ -1,9 +1,12 @@
 {
     "C_Cpp.intelliSenseEngine": "Default",
     "cSpell.words": [
+        "baudrate",
         "Comms",
+        "gamepads",
         "ifunction",
         "PWMB",
-        "PWMF"
+        "PWMF",
+        "serialutil"
     ]
 }
