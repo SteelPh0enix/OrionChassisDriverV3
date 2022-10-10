@@ -247,7 +247,7 @@ def main():
 
     while True:
         events = gamepad_manager.events()
-        print(f"Events count: {len(events)}")
+        print("Events count: {}".format(len(events)))
         for event in events:
             print(event)
 

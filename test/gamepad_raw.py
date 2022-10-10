@@ -7,13 +7,15 @@ def main():
         exit(1)
 
     gamepad = inputs.devices.gamepads[0]
-    print(f"Using gamepad '{gamepad}'")
+    print("Using gamepad '{}'".format(gamepad))
 
     while True:
         for event in gamepad.read():
             if event.ev_type != "Sync":
                 print(
-                    f"code: {event.code}, state: {event.state}, type: {event.ev_type}"
+                    "code: {}, state: {}, type: {}".format(
+                        event.code, event.state, event.ev_type
+                    )
                 )
 
 

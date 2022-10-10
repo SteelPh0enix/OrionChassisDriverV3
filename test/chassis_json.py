@@ -8,7 +8,7 @@ class JsonChassis:
 
     def send_power_and_rotation(self, power, rotation):
         msg = json.dumps({"X": power, "Y": rotation})
-        print(f"Sending: {msg}")
+        print("Sending: {}".format(msg))
         self._serial.write(msg.encode("ASCII"))
 
     def fetch_feedback_string(self):
