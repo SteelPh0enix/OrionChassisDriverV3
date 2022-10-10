@@ -129,6 +129,7 @@ GAMEPAD_MAPPINGS = {
         },
     }
 }
+GAMEPAD_MAPPINGS["Logitech Gamepad F710"] = GAMEPAD_MAPPINGS["Microsoft X-Box 360 pad"]
 
 
 class GamepadInputEvent:
