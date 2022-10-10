@@ -5,25 +5,25 @@
 namespace Pinout {
 using PinT = uint8_t;
 
-namespace WheelRF {  // OK
-constexpr PinT PWMB{2};
-constexpr PinT PWMF{3};
-constexpr PinT DirectionF{22};
-constexpr PinT DirectionB{23};
+namespace WheelLF {  // OK
+constexpr PinT PWMB{3};
+constexpr PinT PWMF{2};
+constexpr PinT DirectionF{23};
+constexpr PinT DirectionB{22};
 constexpr PinT FeedbackF{A1};
 constexpr PinT FeedbackB{A0};
 }  // namespace WheelRF
 
-namespace WheelRR {  // OK
+namespace WheelRF {  // OK
 constexpr PinT PWMF{7};
 constexpr PinT PWMB{6};
-constexpr PinT DirectionF{26};
-constexpr PinT DirectionB{27};
+constexpr PinT DirectionF{27};
+constexpr PinT DirectionB{26};
 constexpr PinT FeedbackF{A5};
 constexpr PinT FeedbackB{A4};
 }  // namespace WheelRR
 
-namespace WheelLF {  // OK
+namespace WheelLR {  // OK
 constexpr PinT PWMB{5};
 constexpr PinT PWMF{4};
 constexpr PinT DirectionF{25};
@@ -32,13 +32,13 @@ constexpr PinT FeedbackF{A3};
 constexpr PinT FeedbackB{A2};
 }  // namespace WheelLF
 
-namespace WheelLR {  // OK
-constexpr PinT PWMF{8};
-constexpr PinT PWMB{9};
-constexpr PinT DirectionF{28};
-constexpr PinT DirectionB{29};
-constexpr PinT FeedbackF{A6};
-constexpr PinT FeedbackB{A7};
+namespace WheelRR {  // OK
+constexpr PinT PWMF{9};
+constexpr PinT PWMB{8};
+constexpr PinT DirectionF{29};
+constexpr PinT DirectionB{28};
+constexpr PinT FeedbackF{A7};
+constexpr PinT FeedbackB{A6};
 }  // namespace WheelLR
 
 namespace Encoders {
