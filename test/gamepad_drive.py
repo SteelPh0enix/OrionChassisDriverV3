@@ -2,6 +2,8 @@ from gamepad_thread import GamepadThread
 from time import sleep
 from chassis_json import JsonChassis
 
+CHASSIS_COM_PORT = "/dev/ttyUSB0"
+
 TRANSMISSION_DELAY_SECONDS = 0.1
 SPEED_AXIS_NAME = "AxisY"
 ROTATION_AXIS_NAME = "AxisX"
@@ -15,7 +17,7 @@ def main():
         exit(1)
 
     try:
-        chassis = JsonChassis("COM5", 250000)
+        chassis = JsonChassis(CHASSIS_COM_PORT, 250000)
     except Exception as ex:
         print(f"Cannot connect to chassis, reason: {ex}")
         exit(2)
