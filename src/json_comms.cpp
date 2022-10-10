@@ -1,8 +1,14 @@
+#include <string.h>
 #include <json_comms.hpp>
 #include <json_keys.hpp>
 
+// uint8_t serialData[1024];
+
 bool jsonContainsXYDriveMessage(JsonObject const& json) {
-  return (json.containsKey(JsonKey::Input::RoverRotation) && json.containsKey(JsonKey::Input::RoverSpeed));
+  bool const containsRotation = json.containsKey(JsonKey::Input::RoverRotation);
+  bool const containsSpeed = json.containsKey(JsonKey::Input::RoverSpeed);
+
+  return containsRotation && containsSpeed;
 }
 
 bool validateJsonXYDriveMessage(JsonObject const& json) {
@@ -19,24 +25,30 @@ XYDriveMessage getXYDriveMessageFromDoc(JsonObject const& json) {
 }
 
 void JSONComms::tryReadingInput(Stream& stream) {
+  StaticJsonDocument<JsonBufferSize> jsonDoc;
+
+  // stream.readBytesUntil('\n', serialData, 1000);
   auto result = deserializeJson(jsonDoc, stream);
 
-  if (!result) {
-    return;
-  }
+  if (result == DeserializationError::Ok) {
+    JsonObject json = jsonDoc.as<JsonObject>();
 
-  JsonObject json = jsonDoc.as<JsonObject>();
-
-  if (jsonContainsXYDriveMessage(json)) {
-    if (validateJsonXYDriveMessage(json)) {
-      auto msg = getXYDriveMessageFromDoc(json);
-      if (callbackXYDriveMessage != nullptr) {
-        callbackXYDriveMessage(msg);
+    if (jsonContainsXYDriveMessage(json)) {
+      if (validateJsonXYDriveMessage(json)) {
+        auto msg = getXYDriveMessageFromDoc(json);
+        if (callbackXYDriveMessage != nullptr) {
+          callbackXYDriveMessage(msg);
+        }
       }
     }
+
+  } else {
+    Serial.print("Error - couldn't deserialize JSON, reason: ");
+    // Serial.print((char const*)serialData);
+    Serial.println(result.c_str());
   }
 
-  jsonDoc.clear();
+  // memset(serialData, 0, 1024);
 }
 
 void addWheelFeedbackToJson(JsonObject& json, ChassisFeedback::WheelFeedback const& feedback, char const* keyName) {
@@ -48,6 +60,7 @@ void addWheelFeedbackToJson(JsonObject& json, ChassisFeedback::WheelFeedback con
 }
 
 void JSONComms::sendChassisFeedback(Stream& stream, ChassisFeedback const& feedback) {
+  StaticJsonDocument<JsonBufferSize> jsonDoc;
   auto json = jsonDoc.to<JsonObject>();
 
   // dummy fields, to be filled in future
@@ -63,7 +76,6 @@ void JSONComms::sendChassisFeedback(Stream& stream, ChassisFeedback const& feedb
   addWheelFeedbackToJson(json, feedback.rightRear, JsonKey::Feedback::RightRearWheelPWM);
 
   serializeJson(jsonDoc, stream);
-  jsonDoc.clear();
 }
 
 void JSONComms::setXYDriveMessageCallback(XYDriveMessageCallbackT callback) {

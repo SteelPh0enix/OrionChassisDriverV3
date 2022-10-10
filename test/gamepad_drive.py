@@ -1,8 +1,9 @@
 from gamepad_thread import GamepadThread
 from time import sleep
 from chassis_json import JsonChassis
+import json
 
-CHASSIS_COM_PORT = "/dev/ttyUSB0"
+CHASSIS_COM_PORT = "COM5"
 
 TRANSMISSION_DELAY_SECONDS = 0.1
 SPEED_AXIS_NAME = "AxisY"
@@ -37,7 +38,19 @@ def main():
 
         # print(f"Current speed: {current_speed}, rotation: {current_rotation}")
         chassis.send_power_and_rotation(current_speed, current_rotation)
-        # print(chassis.fetch_feedback_string())
+        feedback = chassis.fetch_feedback_string()
+        feedback_json = {}
+        json_parsing_error = False
+        try:
+            feedback_json = json.loads(feedback.strip())
+        except:
+            json_parsing_error = True
+
+        if json_parsing_error:
+            print("Invalid JSON received: {}".format(feedback))
+        else:
+            print(json.dumps(feedback_json, indent=2))
+
         sleep(TRANSMISSION_DELAY_SECONDS)
 
 

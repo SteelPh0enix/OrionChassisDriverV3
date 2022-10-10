@@ -18,12 +18,13 @@ void blink() {
 
 void handleDriveMessage(XYDriveMessage message) {
   chassis.setRawMovement(message.x, message.y);
+  comms.sendChassisFeedback(Serial, chassis.feedback());
+  blink();
 }
 
 void sendFeedback() {
   auto feedback = chassis.feedback();
   comms.sendChassisFeedback(Serial, feedback);
-  blink();
 }
 
 void setup() {
@@ -38,5 +39,6 @@ void setup() {
 void loop() {
   chassis.process();
   comms.tryReadingInput(Serial);
-  feedbackScheduler.process();
+  // feedbackScheduler.process();
+  // blink();
 }

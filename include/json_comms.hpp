@@ -14,5 +14,4 @@ class JSONComms {
 
  private:
   XYDriveMessageCallbackT callbackXYDriveMessage = nullptr;
-  StaticJsonDocument<JsonBufferSize> jsonDoc;
 };
