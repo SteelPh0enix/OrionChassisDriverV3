@@ -5,7 +5,8 @@
 namespace Pinout {
 using PinT = uint8_t;
 
-namespace WheelLF {  // OK!`
+
+namespace WheelLF {  // OK
 constexpr PinT PWMB{3};
 constexpr PinT PWMF{2};
 constexpr PinT DirectionF{23};
