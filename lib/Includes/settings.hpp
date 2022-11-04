@@ -19,3 +19,4 @@ constexpr unsigned WheelPowerChangePerCycle = 15;
 // Configures the time between feedback updates.
 constexpr unsigned long FeedbackDelayMs = 500;
 }  // namespace Settings
+

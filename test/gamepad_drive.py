@@ -8,6 +8,8 @@ CHASSIS_COM_PORT = "COM5"
 TRANSMISSION_DELAY_SECONDS = 0.1
 SPEED_AXIS_NAME = "AxisY"
 ROTATION_AXIS_NAME = "AxisX"
+COM_PORT = "COM3"
+COM_BAUDRATE = 250000
 
 
 def main():
@@ -20,6 +22,7 @@ def main():
 
     try:
         chassis = JsonChassis(CHASSIS_COM_PORT, 250000)
+
     except Exception as ex:
         # print(f"Cannot connect to chassis, reason: {ex}")
         print("Cannot connect to chassis, reason: {}".format(ex))
