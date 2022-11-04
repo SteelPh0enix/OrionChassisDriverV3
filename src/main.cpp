@@ -34,7 +34,7 @@ void setup() {
 
   comms.setXYDriveMessageCallback(handleDriveMessage);
   chassis.initialize(Settings::ChassisProcessingDelay, Settings::WheelPowerChangePerCycle);
-}
+o}
 
 void loop() {
   chassis.process();
